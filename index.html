@@ -7,7 +7,7 @@
     <title>Schade Melden - Klaas Vis</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" href="Logo.png" type="image/png">
-<link rel="stylesheet" href="styles.css?v=1"> <!-- Voeg ?v=1 toe om caching te voorkomen -->    <!-- EmailJS -->
+    <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
@@ -48,7 +48,8 @@
             }
         })();
     </script>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css?v=1">
+    <script src="script.js?v=1"></script>
 </head>
 <body>
     <!-- Header -->
@@ -62,8 +63,8 @@
             <button class="hamburger">☰</button>
             <ul class="nav-list">
                 <li><a href="https://www.klaasvis.nl">Home</a></li>
-                <li><a href=""https://klaasvis1834.github.io/contact/">Doorgeven wijziging</a></li>
-                <li><a href="https://Dekkerautoverzekering.github.io/home/">Dekkerautoverzekering</a></li>
+                <li><a href="https://www.klaasvis.nl/doorgeven-wijziging">Doorgeven wijziging</a></li>
+                <li><a href="https://www.klaasvis.nl/dekkerautoverzekering">Dekkerautoverzekering</a></li>
                 <li><a href="https://www.nh1816.nl/mijn-nh1816">Mijn NH1816 Polis</a></li>
                 <li><a href="https://www.klaasvis.nl/downloads">Downloads</a></li>
                 <li><a href="https://klaasvis1834.github.io/contact/">Contact</a></li>
@@ -171,5 +172,91 @@
             <p>© 2025 BV Assurantiekantoor Klaas Vis Ao. 1834 | Alle rechten voorbehouden</p>
         </div>
     </footer>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <img src="Logo.png" alt="Klaas Vis Logo" class="loading-logo">
+            <p>Bezig met verzenden...</p>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Bevestig uw schademelding</h2>
+            <div id="summary"></div>
+            <button onclick="handleSubmit(true)">Ja, verzend mijn schademelding</button>
+            <button onclick="handleSubmit(false)">Nee, ga terug</button>
+        </div>
+    </div>
+
+    <!-- Result Message -->
+    <div id="resultMessage" class="result-message">
+        <p id="resultText"></p>
+    </div>
+	    <script>
+        (function() {
+            emailjs.init('SLdpWo1ZAJkoOj75G');
+        })();
+
+        document.getElementById('schade-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = this;
+            const messageDiv = document.getElementById('form-message');
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            messageDiv.textContent = 'Bezig met verzenden...';
+            messageDiv.style.color = '#007bff';
+
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value || 'Niet opgegeven',
+                insurance: form.insurance.value,
+                polisnummer: form.polisnummer.value,
+                datum: form.datum.value,
+                beschrijving: form.beschrijving.value,
+                to_email: form.email.value
+            };
+
+            const message = `
+Nieuwe schademelding ontvangen:
+
+- Naam: ${formData.name}
+- E-mail: ${formData.email}
+- Telefoon: ${formData.phone}
+- Verzekering: ${formData.insurance}
+- Polisnummer: ${formData.polisnummer}
+- Schadedatum: ${formData.datum}
+- Beschrijving: ${formData.beschrijving}
+            `;
+
+            emailjs.send('service_h6az3sj', 'template_naxxu2a', formData)
+                .then(function(response) {
+                    console.log('E-mail naar klant verzonden:', response);
+                    return emailjs.send('service_h6az3sj', 'template_yqe7y7e', {
+                        to_email: 'mbuijs@klaasvis.nl',
+                        message: message
+                    });
+                })
+                .then(function(response) {
+                    console.log('E-mail naar mbuijs@klaasvis.nl verzonden:', response);
+                    messageDiv.textContent = 'Schade succesvol gemeld! Wij nemen spoedig contact met u op.';
+                    messageDiv.style.color = '#28a745';
+                    form.reset();
+                    submitButton.disabled = false;
+                })
+                .catch(function(error) {
+                    console.error('EmailJS fout:', error);
+                    messageDiv.textContent = 'Fout bij verzenden. Probeer het later opnieuw.';
+                    messageDiv.style.color = '#dc3545';
+                    submitButton.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
