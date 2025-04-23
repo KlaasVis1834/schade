@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meld uw schade bij Klaas Vis voor inboedel, opstal, aansprakelijkheid, motorvoertuig en meer.">
+    <title>Schade Melden - Klaas Vis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="Logo.png" type="image/png">
+<link rel="stylesheet" href="styles.css?v=1"> <!-- Voeg ?v=1 toe om caching te voorkomen -->    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            try {
+                emailjs.init("SLdpWo1ZAJkoOj75G"); // Public Key
+                console.log('EmailJS geïnitialiseerd');
+            } catch (error) {
+                console.error('EmailJS initialisatie mislukt:', error);
+            }
+        })();
+    </script>
+    <!-- Chatbase Script -->
+    <script>
+        (function() {
+            if (!window.chatbase || window.chatbase.getState() !== 'initialized') {
+                window.chatbase = (...arguments) => {
+                    if (!window.chatbase.q) { window.chatbase.q = []; }
+                    window.chatbase.q.push(arguments);
+                };
+                window.chatbase = new Proxy(window.chatbase, {
+                    get(target, prop) {
+                        if (prop === 'q') { return target.q; }
+                        return (...args) => target(prop, ...args);
+                    }
+                });
+            }
+            const onLoad = function() {
+                const script = document.createElement('script');
+                script.src = 'https://www.chatbase.co/embed.min.js';
+                script.id = 'C60jEJW_QuVD7X3vE5rzE';
+                script.setAttribute('domain', 'www.chatbase.co');
+                document.body.appendChild(script);
+            };
+            if (document.readyState === 'complete') {
+                onLoad();
+            } else {
+                window.addEventListener('load', onLoad);
+            }
+        })();
+    </script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="https://www.klaasvis.nl" class="logo-link">
+                <img src="Logo.png?v=2" alt="Klaas Vis Logo" class="main-logo">
+            </a>
+        </div>
+        <nav class="nav">
+            <button class="hamburger">☰</button>
+            <ul class="nav-list">
+                <li><a href="https://www.klaasvis.nl">Home</a></li>
+                <li><a href=""https://klaasvis1834.github.io/contact/">Doorgeven wijziging</a></li>
+                <li><a href="https://Dekkerautoverzekering.github.io/home/">Dekkerautoverzekering</a></li>
+                <li><a href="https://www.nh1816.nl/mijn-nh1816">Mijn NH1816 Polis</a></li>
+                <li><a href="https://www.klaasvis.nl/downloads">Downloads</a></li>
+                <li><a href="https://klaasvis1834.github.io/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Schade Melden Section -->
+    <section id="schade-melden" class="schade-melden">
+        <div class="schade-content">
+            <h2>Schade Melden</h2>
+            <p>Vul onderstaand formulier in om uw schade te melden voor inboedel, opstal, aansprakelijkheid, motorvoertuig of andere verzekeringen. Wij nemen zo spoedig mogelijk contact met u op.</p>
+            <form id="schade-form" class="schade-form">
+                <div class="form-group">
+                    <label for="name">Naam *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mailadres *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefoonnummer</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="insurance">Type Verzekering *</label>
+                    <select id="insurance" name="insurance" required>
+                        <option value="" disabled selected>Kies een verzekering</option>
+                        <option value="inboedel">Inboedel</option>
+                        <option value="opstal">Opstal</option>
+                        <option value="aansprakelijkheid">Aansprakelijkheid</option>
+                        <option value="motorvoertuig">Motorvoertuig</option>
+                        <option value="reis">Reis en annulering</option>
+                        <option value="overig">Overig</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="polisnummer">Polisnummer *</label>
+                    <input type="text" id="polisnummer" name="polisnummer" required>
+                </div>
+                <div class="form-group">
+                    <label for="datum">Schadedatum *</label>
+                    <input type="date" id="datum" name="datum" required>
+                </div>
+                <div class="form-group">
+                    <label for="beschrijving">Beschrijving van de Schade *</label>
+                    <textarea id="beschrijving" name="beschrijving" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn primary">Schade Melden</button>
+            </form>
+            <div id="form-message" class="form-message"></div>
+        </div>
+    </section>
+
+    <!-- Tiles Section -->
+    <section id="tiles" class="tiles">
+        <div class="tiles-content">
+            <!-- Tile 1: Aangesloten schadeherstelbedrijven -->
+            <div class="tile">
+                <h3>Aangesloten Schadeherstelbedrijven</h3>
+                <p><strong>Autoschade</strong></p>
+                <ul>
+                    <li><a href="https://www.schadegarant.nl/">ASR Verzekeringen</a></li>
+                    <li><a href="https://www.aas-schadeherstel.nl/">Klaverblad Verzekeringen</a></li>
+                    <li><a href="https://www.nh1816.nl/klantenservice/schadeherstellers">Noordhollandsche van 1816</a></li>
+                    <li><a href="https://www.anwb.nl/verzekeringen/schade/zoek-schadehersteller">Unigarant</a></li>
+                </ul>
+                <p><strong>Autoruit herstel en/of vervanging</strong></p>
+                <ul>
+                    <li><a href="https://www.glasgarage.nl/">GlasGarage</a> – <a href="tel:+318001246">0800-1246</a></li>
+                    <li><a href="https://www.carglass.nl/">Carglass</a> – <a href="tel:+318000406">0800-0406</a></li>
+                    <li><a href="https://www.autotaalglas.nl/">Autotaalglas</a> – <a href="tel:+318000828">0800-0828</a></li>
+                </ul>
+            </div>
+            <!-- Tile 2: Contact met Ons Opnemen -->
+            <div class="tile">
+                <h3>Contact met Ons Opnemen</h3>
+                <p>Voor directe hulp of vragen kunt u ons bereiken via:</p>
+                <ul>
+                    <li><strong>Tijdens kantooruren:</strong> Bel ons op <a href="tel:+31756314261">(075) 631 42 61</a></li>
+                    <li><strong>Buiten kantooruren:</strong> Stuur een e-mail, bij voorkeur met schadeformulier, naar <a href="mailto:mbuijs@klaasvis.nl">mbuijs@klaasvis.nl</a> of spreek ons antwoordapparaat in. Wij nemen zo spoedig mogelijk contact met u op.</li>
+                </ul>
+            </div>
+            <!-- Tile 3: Schadeformulieren -->
+            <div class="tile">
+                <h3>Schadeformulieren</h3>
+                <p>Hier vindt u het benodigde schadeformulier:</p>
+                <ul>
+                    <li><a href="https://klaasvis1834.github.io/contact/">Contactformulier</a></li>
+                    <li><a href="https://www.mobielschademelden.nl/landing-page">Motorrijtuig schade online melden</a></li>
+                    <li><a href="https://www.klaasvis.nl/_downloads/51635894">Algemeen schadeformulier ASR</a></li>
+                    <li><a href="https://www.klaasvis.nl/_downloads/51635895">Algemeen schadeformulier Nationale Nederlanden</a></li>
+                    <li><a href="https://www.klaasvis.nl/_downloads/51635896">Reis schadeformulier ASR</a></li>
+                    <li><a href="https://www.klaasvis.nl/_downloads/51635897">Reis schadeformulier Nh1816</a></li>
+                    <li><a href="https://www.klaasvis.nl/_downloads/51635898">Schadeformulier algemeen Nh1816</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 BV Assurantiekantoor Klaas Vis Ao. 1834 | Alle rechten voorbehouden</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,423 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding-top: 140px; /* Ruimte voor header + menubalk */
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header */
+.header {
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+}
+
+.logo-link {
+    display: inline-block;
+    line-height: 0;
+    text-decoration: none;
+}
+
+.main-logo {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+/* Menubalk */
+.nav {
+    background: #003087;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-list li {
+    display: inline-block;
+}
+
+.nav-list a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.nav-list a:hover {
+    background: #007bff;
+    border-radius: 5px;
+}
+
+.hamburger {
+    display: none;
+    font-size: 24px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+/* Schade Melden Section */
+.schade-melden {
+    padding: 30px 20px;
+    background: #fff;
+    text-align: center;
+}
+
+.schade-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.schade-melden h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #003087;
+}
+
+.schade-melden p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.schade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input[type="file"] {
+    padding: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    min-height: 44px;
+    line-height: 1.5;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn.primary {
+    background: #007bff;
+    color: #fff;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.form-message {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Tiles Section */
+.tiles {
+    padding: 30px 20px;
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.tiles-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.tile {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+}
+
+.tile h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #003087;
+}
+
+.tile p, .tile li {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.tile ul {
+    list-style: none;
+}
+
+.tile ul li {
+    padding-left: 20px;
+    position: relative;
+}
+
+.tile ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+}
+
+.tile a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.tile a:hover {
+    text-decoration: underline;
+}
+
+/* Contact Section */
+.contact {
+    padding: 30px 20px;
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.contact-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #003087;
+}
+
+.contact p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.contact-options {
+    list-style: none;
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contact-options li {
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.contact-options li::before {
+    content: "📞";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+}
+
+.contact-options a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-options a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background: #003087;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    font-size: 14px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px;
+    }
+
+    .main-logo {
+        height: 60px;
+    }
+
+    .schade-melden, .tiles, .contact {
+        padding: 20px;
+    }
+
+    .schade-melden h2,
+    .tiles h2,
+    .contact h2 {
+        font-size: 24px;
+    }
+
+    .schade-melden p,
+    .tiles p,
+    .contact p {
+        font-size: 14px;
+    }
+
+    .form-group label,
+    .tile p,
+    .tile li {
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 12px;
+    }
+
+    .contact-options li {
+        font-size: 12px;
+    }
+
+    .tiles-content {
+        grid-template-columns: 1fr;
+    }
+
+    /* Menubalk responsive */
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background: #003087;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        display: block;
+    }
+
+    .nav-list a {
+        display: block;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 100px;
+    }
+
+    .main-logo {
+        height: 50px;
+    }
+
+    .schade-melden h2,
+    .tiles h2,
+    .contact h2 {
+        font-size: 20px;
+    }
+
+    .schade-melden p,
+    .tiles p,
+    .contact p {
+        font-size: 12px;
+    }
+
+    .form-group label,
+    .tile p,
+    .tile li {
+        font-size: 12px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 12px;
+    }
+}
