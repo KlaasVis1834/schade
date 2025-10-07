@@ -3,7 +3,7 @@ document.querySelector('.hamburger').addEventListener('click', function() {
     document.querySelector('.nav-list').classList.toggle('active');
 });
 
-// Schadeformulier EmailJS
+// Schadeformulier EmailJS + reCAPTCHA-controle
 document.getElementById('schade-form').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -11,6 +11,14 @@ document.getElementById('schade-form').addEventListener('submit', async function
     const messageDiv = document.getElementById('form-message');
     const fileInput = document.getElementById('bijlagen');
     const submitButton = form.querySelector('button[type="submit"]');
+
+    // ✅ Controleer of reCAPTCHA is voltooid
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+        messageDiv.textContent = 'Bevestig dat je geen robot bent.';
+        messageDiv.style.color = '#dc3545';
+        return;
+    }
 
     // Disable knop tijdens verzenden
     submitButton.disabled = true;
@@ -125,6 +133,7 @@ Nieuwe schademelding ontvangen:
             messageDiv.textContent = 'Schade succesvol gemeld! Wij nemen spoedig contact met u op.';
             messageDiv.style.color = '#28a745';
             form.reset();
+            grecaptcha.reset(); // ✅ Reset reCAPTCHA na succesvol verzenden
         })
         .catch((error) => {
             console.error('EmailJS fout:', error);
@@ -142,4 +151,5 @@ Nieuwe schademelding ontvangen:
                 messageDiv.textContent += ` Let op: Sommige bestanden zijn te groot (>1MB). Stuur deze naar mbuijs@klaasvis.nl.`;
             }
         });
+
 });
