@@ -14,10 +14,11 @@ document.getElementById('schade-form').addEventListener('submit', async function
 
     // ✅ Controleer of reCAPTCHA is voltooid
     const recaptchaResponse = grecaptcha.getResponse();
-    if (!recaptchaResponse) {
-        messageDiv.textContent = 'Bevestig dat je geen robot bent.';
+    if (!recaptchaResponse || recaptchaResponse.length === 0) {
+        messageDiv.textContent = '❗ Bevestig eerst dat u geen robot bent.';
         messageDiv.style.color = '#dc3545';
-        return;
+        submitButton.disabled = false;
+        return; // 👉 voorkomt verdere uitvoering
     }
 
     // Disable knop tijdens verzenden
@@ -39,7 +40,7 @@ document.getElementById('schade-form').addEventListener('submit', async function
         bijlagen_data: []
     };
 
-    // Maak een message-veld voor template_yqe7y7e
+    // Berichttekst opbouwen
     formData.message = `
 Nieuwe schademelding ontvangen:
 
@@ -52,30 +53,25 @@ Nieuwe schademelding ontvangen:
 - Beschrijving: ${formData.beschrijving}
 `;
 
-    // Valideer e-mailadressen
+    // E-mailadres valideren
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.to_email)) {
-        messageDiv.textContent = 'Fout: Ongeldig e-mailadres voor klant.';
+        messageDiv.textContent = 'Fout: Ongeldig e-mailadres.';
         messageDiv.style.color = '#dc3545';
         submitButton.disabled = false;
         return;
     }
-    if (formData.to_email_mij !== 'mbuijs@klaasvis.nl') {
-        console.warn('Waarschuwing: Ontvangstadres voor mij lijkt incorrect:', formData.to_email_mij);
-    }
 
-    console.log('Formulierdata:', formData);
-
-    // Controleer of EmailJS beschikbaar is
+    // Controleer EmailJS
     if (!window.emailjs) {
-        messageDiv.textContent = 'Fout: EmailJS niet geladen. Controleer je internetverbinding.';
+        messageDiv.textContent = 'Fout: EmailJS niet geladen.';
         messageDiv.style.color = '#dc3545';
         submitButton.disabled = false;
         return;
     }
 
     // Bestanden verwerken
-    const maxFileSize = 1 * 1024 * 1024; // 1MB
+    const maxFileSize = 1 * 1024 * 1024; // 1 MB
     const maxFiles = 5;
     let oversizeFiles = false;
 
@@ -91,65 +87,43 @@ Nieuwe schademelding ontvangen:
         for (const file of fileInput.files) {
             if (file.size > maxFileSize) {
                 oversizeFiles = true;
-                formData.message += `- ${file.name} (te groot, >1MB, stuur apart naar mbuijs@klaasvis.nl)\n`;
+                formData.message += `- ${file.name} (te groot, >1MB)\n`;
                 continue;
             }
-
-            try {
-                const base64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                formData.bijlagen_data.push({
-                    name: file.name,
-                    type: file.type,
-                    base64: base64
-                });
-                formData.message += `- ${file.name}\n`;
-            } catch (error) {
-                console.error('Fout bij verwerken bestand:', file.name, error);
-                messageDiv.textContent = `Fout bij verwerken van ${file.name}. Probeer opnieuw.`;
-                messageDiv.style.color = '#dc3545';
-                submitButton.disabled = false;
-                return;
-            }
+            const base64 = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+            formData.bijlagen_data.push({
+                name: file.name,
+                type: file.type,
+                base64: base64
+            });
+            formData.message += `- ${file.name}\n`;
         }
     } else {
         formData.message += '\nBijlagen: Geen';
     }
 
-    // Verzend naar klant (template_naxxu2a)
-    emailjs.send('service_h6az3sj', 'template_naxxu2a', formData)
-        .then((response) => {
-            console.log('E-mail naar klant verzonden:', response);
-            // Verzend naar jou (template_yqe7y7e)
-            console.log('Verzenden naar rbuijs@klaasvis.nl met data:', formData);
-            return emailjs.send('service_h6az3sj', 'template_yqe7y7e', formData);
-        })
-        .then((response) => {
-            console.log('E-mail naar rbuijs@klaasvis.nl verzonden:', response);
-            messageDiv.textContent = 'Schade succesvol gemeld! Wij nemen spoedig contact met u op.';
-            messageDiv.style.color = '#28a745';
-            form.reset();
-            grecaptcha.reset(); // ✅ Reset reCAPTCHA na succesvol verzenden
-        })
-        .catch((error) => {
-            console.error('EmailJS fout:', error);
-            let errorMessage = 'Fout bij verzenden. Probeer het later opnieuw.';
-            if (error.text) {
-                errorMessage += ` Details: ${error.text}`;
-            }
-            messageDiv.textContent = errorMessage;
-            messageDiv.style.color = '#dc3545';
-        })
-        .finally(() => {
-            submitButton.disabled = false;
-            // Waarschuwing voor grote bestanden
-            if (oversizeFiles) {
-                messageDiv.textContent += ` Let op: Sommige bestanden zijn te groot (>1MB). Stuur deze naar mbuijs@klaasvis.nl.`;
-            }
-        });
+    // ✅ Alleen als reCAPTCHA geldig is, wordt nu verstuurd
+    try {
+        await emailjs.send('service_h6az3sj', 'template_naxxu2a', formData);
+        await emailjs.send('service_h6az3sj', 'template_yqe7y7e', formData);
 
+        messageDiv.textContent = '✅ Schade succesvol gemeld! Wij nemen spoedig contact met u op.';
+        messageDiv.style.color = '#28a745';
+        form.reset();
+        grecaptcha.reset(); // reset reCAPTCHA
+    } catch (error) {
+        console.error('EmailJS fout:', error);
+        messageDiv.textContent = '❌ Fout bij verzenden. Probeer het later opnieuw.';
+        messageDiv.style.color = '#dc3545';
+    } finally {
+        submitButton.disabled = false;
+        if (oversizeFiles) {
+            messageDiv.textContent += ' Let op: sommige bestanden waren te groot (>1MB).';
+        }
+    }
 });
