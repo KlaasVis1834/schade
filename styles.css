@@ -310,6 +310,85 @@ h1, h2, h3 {
     font-size: 14px;
 }
 
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Loading Screen */
+.loading-screen {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.8);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-logo {
+    height: 100px;
+    width: auto;
+}
+
+/* Result Message */
+.result-message {
+    display: none;
+    position: fixed;
+    z-index: 1003;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.9);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
     body {
@@ -320,104 +399,4 @@ h1, h2, h3 {
         height: 60px;
     }
 
-    .schade-melden, .tiles, .contact {
-        padding: 20px;
-    }
-
-    .schade-melden h2,
-    .tiles h2,
-    .contact h2 {
-        font-size: 24px;
-    }
-
-    .schade-melden p,
-    .tiles p,
-    .contact p {
-        font-size: 14px;
-    }
-
-    .form-group label,
-    .tile p,
-    .tile li {
-        font-size: 14px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 12px;
-    }
-
-    .contact-options li {
-        font-size: 12px;
-    }
-
-    .tiles-content {
-        grid-template-columns: 1fr;
-    }
-
-    /* Menubalk responsive */
-    .nav-list {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-        background: #003087;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 20px;
-    }
-
-    .nav-list.active {
-        display: flex;
-    }
-
-    .nav-list li {
-        display: block;
-    }
-
-    .nav-list a {
-        display: block;
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    .hamburger {
-        display: block;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding-top: 100px;
-    }
-
-    .main-logo {
-        height: 50px;
-    }
-
-    .schade-melden h2,
-    .tiles h2,
-    .contact h2 {
-        font-size: 20px;
-    }
-
-    .schade-melden p,
-    .tiles p,
-    .contact p {
-        font-size: 12px;
-    }
-
-    .form-group label,
-    .tile p,
-    .tile li {
-        font-size: 12px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 12px;
-    }
-}
+    .schade-melden
